@@ -44,9 +44,8 @@ project-root(OS-Scheduling-Comparison)/
 |_test-cases/      # Documentation of tested scenarios
 
 
----------------------------------------------------------
-
 ## 📊 Test Scenarios
+```text
 The simulator has been verified using the following 5 required scenarios to ensure accuracy and robustness:
 
 1.  **Scenario A (Basic Workload)**: Mixed arrival and burst times to verify the general accuracy of calculation for both algorithms.
