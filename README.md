@@ -8,12 +8,12 @@ This project is a high-fidelity CPU scheduling simulator developed for the Opera
 The simulator evaluates performance based on key metrics: Waiting Time (WT), Turnaround Time (TAT), and Response Time (RT).
 
 ## 👥 Team Members
-* **[Mohamed Ahmed Mohamed abdeul majeed]** - ID: [20245069]
-* **[]** - ID: [Partner's ID]
-* **[]** -ID: [ID]
-* **[]** -ID: [ID]
-* **[]** -ID: [ID]
-* **[]** -ID: [ID]
+* **Mohamed Ahmed Mohamed abdeul majeed** - ID: [20245069]
+* **Ali Atef Harbi Mohamed** - ID: [20245049]
+* **Ahmed Hani Mohamed** -ID: [20245009]
+* **Mark Basem Naeem** -ID: [20245063]
+* **Abdullah Amr Saad Al-Din** -ID: [20245044]
+* **Yassin Mohamed Mohamed** -ID: [20245084]
 
 ## 🚀 Key Features
 - **Graphic Interface**: Built with JavaFX and Scene Builder for intuitive user interaction.
