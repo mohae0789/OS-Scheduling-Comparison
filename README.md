@@ -32,19 +32,19 @@ The simulator evaluates performance based on key metrics: Waiting Time (WT), Tur
 ## 📂 Repository Structure
 Following the recommended professional structure:
 ```text
+project-root(OS-Scheduling-Comparison)/
+|--src/
+|   |── model/      # Data models (Process class)
+|   ├── scheduler/  # Logic for RR and SJF algorithms
+|   ├── metrics/    # Performance calculation logic
+|   ├── gui/        # FXML files and Controllers
+|   └── util/       # Input validation and helper utilities
+|-- assets/          # UI icons and CSS
+|--screenshots/     # UI and Gantt Chart captures
+|_test-cases/      # Documentation of tested scenarios
 
-src/
- ├── model/      # Data models (Process class)
- ├── scheduler/  # Logic for RR and SJF algorithms
- ├── metrics/    # Performance calculation logic
- ├── gui/        # FXML files and Controllers
- └── util/       # Input validation and helper utilities
-assets/          # UI icons and CSS
-screenshots/     # UI and Gantt Chart captures
-test-cases/      # Documentation of tested scenarios
-```text
 
-
+---------------------------------------------------------
 
 ## 📊 Test Scenarios
 The simulator has been verified using the following 5 required scenarios to ensure accuracy and robustness:
