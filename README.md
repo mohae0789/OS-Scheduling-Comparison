@@ -31,7 +31,7 @@ The simulator evaluates performance based on key metrics: Waiting Time (WT), Tur
 
 ## 📂 Repository Structure
 Following the recommended professional structure:
-```text
+
 src/
  ├── model/      # Data models (Process class)
  ├── scheduler/  # Logic for RR and SJF algorithms
@@ -42,7 +42,7 @@ assets/          # UI icons and CSS
 screenshots/     # UI and Gantt Chart captures
 test-cases/      # Documentation of tested scenarios
 
----
+
 
 ## 📊 Test Scenarios
 The simulator has been verified using the following 5 required scenarios to ensure accuracy and robustness:
