@@ -31,6 +31,7 @@ The simulator evaluates performance based on key metrics: Waiting Time (WT), Tur
 
 ## 📂 Repository Structure
 Following the recommended professional structure:
+```text
 
 src/
  ├── model/      # Data models (Process class)
