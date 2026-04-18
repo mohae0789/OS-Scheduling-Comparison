@@ -42,3 +42,42 @@ assets/          # UI icons and CSS
 screenshots/     # UI and Gantt Chart captures
 test-cases/      # Documentation of tested scenarios
 
+---
+
+## 📊 Test Scenarios
+The simulator has been verified using the following 5 required scenarios to ensure accuracy and robustness:
+
+1.  **Scenario A (Basic Workload)**: Mixed arrival and burst times to verify the general accuracy of calculation for both algorithms.
+2.  **Scenario B (Short-Job-Heavy)**: Features several short processes to demonstrate how **SJF** behavior becomes clearly more efficient in minimizing average wait times.
+3.  **Scenario C (Fairness Case)**: Prepared a workload to show how **Round Robin** distributes CPU service fairly across multiple active processes using the Time Quantum.
+4.  **Scenario D (Long-Job Sensitivity)**: A case where one long process competes with shorter ones, highlighting how SJF might cause starvation while RR maintains responsiveness.
+5.  **Scenario E (Validation Case)**: Includes at least one invalid input example (e.g., negative arrival time or non-numeric burst) to demonstrate the system's safety and error-handling behavior.
+
+---
+
+## ⚙️ How to Run
+To run this simulator on your local machine, follow these steps:
+
+1.  **Prerequisites**: Ensure you have **Java 17 (JDK)** or higher installed and the **JavaFX SDK** configured.
+2.  **Clone the Repository**: 
+    ```bash
+    git clone [Your-Repo-URL]
+    ```
+3.  **IDE Configuration**:
+    * Open the project in your IDE (IntelliJ IDEA is recommended).
+    * Add the JavaFX library to your Project Structure.
+    * Add the following **VM Options** in your Run Configuration:
+      `--module-path [path-to-your-javafx-sdk/lib] --add-modules javafx.controls,javafx.fxml`
+4.  **Launch**: Run the `Main.java` file to start the Graphical User Interface.
+
+---
+
+## 📌 Conclusion
+After conducting a detailed comparative analysis between **Round Robin** and **SJF**, our team observed the following:
+
+* **Performance Metrics**: **SJF** consistently achieved a lower **Average Waiting Time** and **Turnaround Time**, making it the most efficient choice for minimizing overall delay.
+* **Execution Fairness**: **Round Robin** appeared more balanced and fair. It prevents "Starvation" and ensures that every process gets a turn in the CPU, regardless of its length.
+* **Impact of Time Quantum**: We observed that as the Time Quantum increases, Round Robin behavior starts to converge toward FCFS. A smaller Quantum improves **Response Time** but increases the overhead due to frequent context switching.
+* **Final Recommendation**: **SJF** is highly recommended for batch processing systems, while **Round Robin** is the optimal choice for interactive, time-sharing environments where user experience and fairness are priorities.
+
+
