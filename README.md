@@ -42,6 +42,7 @@ src/
 assets/          # UI icons and CSS
 screenshots/     # UI and Gantt Chart captures
 test-cases/      # Documentation of tested scenarios
+```text
 
 
 
