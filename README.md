@@ -31,6 +31,7 @@ The simulator evaluates performance based on key metrics: Waiting Time (WT), Tur
 
 ## 📂 Repository Structure
 Following the recommended professional structure:
+```bash
 project-root(OS-Scheduling-Comparison)/
 |--src/
 |   |── model/      # Data models (Process class)
@@ -41,7 +42,7 @@ project-root(OS-Scheduling-Comparison)/
 |-- assets/          # UI icons and CSS
 |--screenshots/     # UI and Gantt Chart captures
 |_test-cases/      # Documentation of tested scenarios
-
+```
 
 ## 📊 Test Scenarios
 
