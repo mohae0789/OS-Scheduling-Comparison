@@ -43,21 +43,21 @@
     </VBox>
 
     <VBox spacing="15" alignment="CENTER" maxWidth="600" VBox.vgrow="ALWAYS">
-        <TableView fx:id="table" visible="false" VBox.vgrow="ALWAYS">
+        <TableView fx:id="table" visible="false" VBox.vgrow="ALWAYS"  managed="false">
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
             <columns>
-                <TableColumn fx:id="colId" text="Process ID" />
-                <TableColumn fx:id="colArrival" text="Arrival" />
-                <TableColumn fx:id="colBurst" text="Burst" />
-                <TableColumn fx:id="colAction" text="Action" />
+                <TableColumn fx:id="colId"     text="Process ID" />
+                <TableColumn fx:id="colArrival" text="Arrival"   />
+                <TableColumn fx:id="colBurst"   text="Burst"     />
+                <TableColumn fx:id="colAction"  text="Action"    />
             </columns>
         </TableView>
 
-        <HBox fx:id="actionBox" spacing="20" alignment="CENTER" visible="false">
+        <HBox fx:id="actionBox" spacing="20" alignment="CENTER" visible="false" managed="false">
             <Button text="Simulate Scheduling ⭐" onAction="#handleSimulate" styleClass="button-base, simulate-button"/>
-            <Button text="Reset ✖" onAction="#handleReset" styleClass="button-base, reset-button"/>
+            <Button text="Reset ✖"                onAction="#handleReset"    styleClass="button-base, reset-button"/>
         </HBox>
     </VBox>
 </VBox>
