@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox spacing="20" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gui.Controller" stylesheets="@style.css" styleClass="root">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER" styleClass="header-box">
+        <Label text="Round Robin Vs SJF Comparison" styleClass="main-title"/>
+        <Label text="Compare CPU scheduling algorithms: fairness vs efficiency" styleClass="sub-title"/>
+    </VBox>
+
+    <VBox spacing="15" styleClass="form-card" maxWidth="800">
+        <HBox spacing="15" alignment="CENTER">
+            <VBox styleClass="input-group">
+                <Label text="Time Quantum" styleClass="input-label"/>
+                <TextField fx:id="txtQuantum" promptText="e.g. 2" styleClass="input-field"/>
+            </VBox>
+            <VBox styleClass="input-group">
+                <Label text="Arrival Time" styleClass="input-label"/>
+                <TextField fx:id="txtArrival" promptText="0" styleClass="input-field"/>
+            </VBox>
+            <VBox styleClass="input-group">
+                <Label text="Burst Time" styleClass="input-label"/>
+                <TextField fx:id="txtBurst" promptText="10" styleClass="input-field"/>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Add Process +" onAction="#handleAddProcess" styleClass="button-base, add-button" prefWidth="150"/>
+            <Separator orientation="VERTICAL" prefHeight="30"/>
+            <Label text="Test Scenarios:" styleClass="input-label"/>
+            <ComboBox fx:id="comboScenarios" promptText="Choose Scenario" onAction="#handleScenarioSelection" prefWidth="220" styleClass="input-field"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="15" alignment="CENTER" maxWidth="600" VBox.vgrow="ALWAYS">
+        <TableView fx:id="table" visible="false" VBox.vgrow="ALWAYS">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="colId" text="Process ID" />
+                <TableColumn fx:id="colArrival" text="Arrival" />
+                <TableColumn fx:id="colBurst" text="Burst" />
+                <TableColumn fx:id="colAction" text="Action" />
+            </columns>
+        </TableView>
+
+        <HBox fx:id="actionBox" spacing="20" alignment="CENTER" visible="false">
+            <Button text="Simulate Scheduling ⭐" onAction="#handleSimulate" styleClass="button-base, simulate-button"/>
+            <Button text="Reset ✖" onAction="#handleReset" styleClass="button-base, reset-button"/>
+        </HBox>
+    </VBox>
+</VBox>
