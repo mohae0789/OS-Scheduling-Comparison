@@ -24,32 +24,53 @@ public class ResultWindow {
             "#00bcd4", "#ff5722"
     };
 
-    private final SimulationResult result;
+    private final SimulationResult rrResult;
+    private final SimulationResult sjfResult;
 
-    public ResultWindow(SimulationResult result) {
-        this.result = result;
+    public ResultWindow(SimulationResult rrResult, SimulationResult sjfResult) {
+        this.rrResult  = rrResult;
+        this.sjfResult = sjfResult;
     }
 
     public void show() {
         Stage stage = new Stage();
         stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.setTitle("Round Robin Simulation Results  (Quantum = " + result.getQuantum() + ")");
+        stage.setTitle("Scheduling Comparison Results");
 
-        VBox root = new VBox(25);
+        VBox root = new VBox(30);
         root.getStyleClass().add("result-root");
         root.setPadding(new Insets(25));
 
+        // ── Round Robin section ──
+        Label rrTitle = new Label("Round Robin  (Quantum = " + rrResult.getQuantum() + ")");
+        rrTitle.getStyleClass().add("result-main-title");
+
         root.getChildren().addAll(
-                buildTitle(),
-                buildGanttSection(),
-                buildMetricsSection()
+                rrTitle,
+                buildGanttSection("Round Robin Gantt Chart", rrResult),
+                buildMetricsSection("Metrics for Round Robin", rrResult)
+        );
+
+        // ── Divider ──
+        Separator sep = new Separator();
+        sep.setPadding(new Insets(5, 0, 5, 0));
+        root.getChildren().add(sep);
+
+        // ── SJF section ──
+        Label sjfTitle = new Label("Shortest Job First (Preemptive)");
+        sjfTitle.getStyleClass().add("result-main-title");
+
+        root.getChildren().addAll(
+                sjfTitle,
+                buildGanttSection("SJF Gantt Chart", sjfResult),
+                buildMetricsSection("Metrics for SJF", sjfResult)
         );
 
         ScrollPane scroll = new ScrollPane(root);
         scroll.setFitToWidth(true);
         scroll.getStyleClass().add("result-root");
 
-        Scene scene = new Scene(scroll, 950, 640);
+        Scene scene = new Scene(scroll, 950, 720);
         var css = getClass().getResource("/gui/style.css");
         if (css != null) scene.getStylesheets().add(css.toExternalForm());
 
@@ -59,20 +80,14 @@ public class ResultWindow {
         stage.toFront();
     }
 
-    private Label buildTitle() {
-        Label lbl = new Label("Round Robin  (Quantum = " + result.getQuantum() + ")");
-        lbl.getStyleClass().add("result-main-title");
-        return lbl;
-    }
-
-    private VBox buildGanttSection() {
+    private VBox buildGanttSection(String heading, SimulationResult result) {
         VBox card = new VBox(10);
         card.getStyleClass().add("result-card");
 
-        Label heading = new Label("Round Robin Gantt Chart");
-        heading.getStyleClass().add("result-section-title");
+        Label lbl = new Label(heading);
+        lbl.getStyleClass().add("result-section-title");
 
-        VBox ganttContent = new VBox(0, buildGanttBar(), buildTimeLine());
+        VBox ganttContent = new VBox(0, buildGanttBar(result), buildTimeLine(result));
         ScrollPane ganttScroll = new ScrollPane(ganttContent);
         ganttScroll.setFitToWidth(false);
         ganttScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -80,22 +95,20 @@ public class ResultWindow {
         ganttScroll.setPrefHeight(95);
         ganttScroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
 
-        card.getChildren().addAll(heading, ganttScroll);
+        card.getChildren().addAll(lbl, ganttScroll);
         return card;
     }
 
-    private HBox buildGanttBar() {
+    private HBox buildGanttBar(SimulationResult result) {
         HBox bar = new HBox(0);
         bar.setAlignment(Pos.CENTER_LEFT);
 
         List<GanttEntry> entries = result.getGanttEntries();
         if (entries == null || entries.isEmpty()) return bar;
 
-        int totalTime = entries.get(entries.size() - 1).getEndTime();
-
         for (GanttEntry entry : entries) {
             double widthPx = Math.max(entry.getDuration() * 50.0, 30);
-            String color = colorForPid(entry.getPid(), result.getProcessMetrics());
+            String color   = colorForPid(entry.getPid(), result.getProcessMetrics());
 
             StackPane cell = new StackPane();
             cell.setPrefSize(widthPx, 50);
@@ -112,14 +125,12 @@ public class ResultWindow {
         return bar;
     }
 
-    private HBox buildTimeLine() {
+    private HBox buildTimeLine(SimulationResult result) {
         HBox line = new HBox(0);
         line.setAlignment(Pos.CENTER_LEFT);
 
         List<GanttEntry> entries = result.getGanttEntries();
         if (entries == null || entries.isEmpty()) return line;
-
-        int totalTime = entries.get(entries.size() - 1).getEndTime();
 
         for (GanttEntry entry : entries) {
             double widthPx = Math.max(entry.getDuration() * 50.0, 30);
@@ -127,7 +138,6 @@ public class ResultWindow {
             tick.getStyleClass().add("gantt-tick");
             tick.setPrefWidth(widthPx);
             tick.setAlignment(Pos.CENTER_LEFT);
-
             line.getChildren().add(tick);
         }
 
@@ -139,32 +149,32 @@ public class ResultWindow {
         return line;
     }
 
-    private VBox buildMetricsSection() {
+    private VBox buildMetricsSection(String heading, SimulationResult result) {
         VBox card = new VBox(10);
         card.getStyleClass().add("result-card");
 
-        Label heading = new Label("Metrics for Round Robin");
-        heading.getStyleClass().add("result-section-title");
+        Label lbl = new Label(heading);
+        lbl.getStyleClass().add("result-section-title");
 
-        card.getChildren().addAll(heading, buildTable(), buildFooter());
+        card.getChildren().addAll(lbl, buildTable(result), buildFooter(result));
         return card;
     }
 
     @SuppressWarnings("unchecked")
-    private TableView<ProcessMetrics> buildTable() {
+    private TableView<ProcessMetrics> buildTable(SimulationResult result) {
         TableView<ProcessMetrics> tv = new TableView<>();
         tv.getStyleClass().add("result-table");
         tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tv.setFixedCellSize(45);
 
         tv.getColumns().addAll(
-                makeCol("Process", "pid",           120),
-                makeCol("AT",      "arrivalTime",    80),
-                makeCol("BT",      "burstTime",      80),
-                makeCol("CT",      "completionTime", 80),
-                makeCol("TAT",     "turnaroundTime", 80),
-                makeCol("WT",      "waitingTime",    80),
-                makeCol("RT",      "responseTime",   80)
+                makeCol("Process", "pid",            120),
+                makeCol("AT",      "arrivalTime",     80),
+                makeCol("BT",      "burstTime",       80),
+                makeCol("CT",      "completionTime",  80),
+                makeCol("TAT",     "turnaroundTime",  80),
+                makeCol("WT",      "waitingTime",     80),
+                makeCol("RT",      "responseTime",    80)
         );
 
         tv.setItems(FXCollections.observableArrayList(result.getProcessMetrics()));
@@ -175,7 +185,7 @@ public class ResultWindow {
         return tv;
     }
 
-    private VBox buildFooter() {
+    private VBox buildFooter(SimulationResult result) {
         VBox footer = new VBox(8);
 
         HBox avgRow = new HBox();
