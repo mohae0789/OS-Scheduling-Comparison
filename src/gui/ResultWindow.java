@@ -66,6 +66,25 @@ public class ResultWindow {
                 buildMetricsSection("Metrics for SJF", sjfResult)
         );
 
+        // Integrate comparison summary card into results window by Ali Atafe
+
+        try {
+    root.getChildren().add(new ComparisonSummaryCard(rrResult, sjfResult).build());
+} catch (Exception ex) {
+    Label fallbackTitle = new Label("Comparison Summary");
+    fallbackTitle.getStyleClass().add("result-section-title");
+
+    Label fallbackBody = new Label(
+            "Comparison section could not be rendered, but the simulation data is available above.");
+    fallbackBody.getStyleClass().add("legend-label");
+    fallbackBody.setWrapText(true);
+
+    VBox fallbackCard = new VBox(10, fallbackTitle, fallbackBody);
+    fallbackCard.getStyleClass().add("result-card");
+    root.getChildren().add(fallbackCard);
+}
+        // End
+
         ScrollPane scroll = new ScrollPane(root);
         scroll.setFitToWidth(true);
         scroll.getStyleClass().add("result-root");
