@@ -263,3 +263,72 @@
     -fx-text-fill: #95a5a6;
     -fx-wrap-text: true;
 }
+
+
+
+/*
+Added styles for the comparison section (table, winner highlighting, analysis questions, and conclusion box) to match the new results layout.
+By Ali Atafe
+*/
+
+.comparison-box {
+    -fx-background-color: #fbfcfe;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-pref-width: 420;
+}
+
+.comparison-heading {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a252f;
+}
+
+.comparison-table {
+    -fx-border-color: #e0e6ed;
+    -fx-border-width: 1;
+}
+
+.comparison-header-cell {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: #1f2d3d;
+    -fx-padding: 8 10 8 10;
+    -fx-border-color: #e0e6ed;
+    -fx-border-width: 0 1 1 0;
+    -fx-background-color: #f4f7fb;
+}
+
+.comparison-body-cell {
+    -fx-alignment: center;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 8 10 8 10;
+    -fx-border-color: #e0e6ed;
+    -fx-border-width: 0 1 1 0;
+}
+
+.comparison-winner-cell {
+    -fx-text-fill: #0e8f4f;
+    -fx-font-weight: bold;
+}
+
+.comparison-question {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2d3d;
+}
+
+.comparison-answer {
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.comparison-conclusion {
+    -fx-background-color: #f2f7fd;
+    -fx-background-radius: 8;
+}
+
+.comparison-conclusion-line {
+    -fx-text-fill: #2c3e50;
+}
+
+
