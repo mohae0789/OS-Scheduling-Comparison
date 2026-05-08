@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import metrics.SimulationResult;
 import model.Process;
 import scheduler.RoundRobinScheduler;
+import scheduler.SJFScheduler;
 import util.ValidationUtil;
 
 public class Controller {
@@ -23,8 +24,6 @@ public class Controller {
 
     private final ObservableList<Process> processList = FXCollections.observableArrayList();
     private int pCounter = 1;
-
-
 
     @FXML
     public void initialize() {
@@ -42,7 +41,6 @@ public class Controller {
         setupActionColumn();
         table.setItems(processList);
     }
-
 
     @FXML
     private void handleAddProcess() {
@@ -105,7 +103,6 @@ public class Controller {
         processList.clear();
         hideTableComponents();
         txtQuantum.clear();
-
     }
 
     @FXML
@@ -125,15 +122,17 @@ public class Controller {
 
         int quantum = Integer.parseInt(txtQuantum.getText().trim());
 
+        // Run Round Robin
+        RoundRobinScheduler rrScheduler = new RoundRobinScheduler(quantum);
+        SimulationResult rrResult = rrScheduler.simulate(processList);
 
-        RoundRobinScheduler scheduler = new RoundRobinScheduler(quantum);
-        SimulationResult result = scheduler.simulate(processList);
+        // Run SJF (Preemptive)
+        SJFScheduler sjfScheduler = new SJFScheduler();
+        SimulationResult sjfResult = sjfScheduler.simulate(processList);
 
-
-        new ResultWindow(result).show();
+        // Open result window with both results
+        new ResultWindow(rrResult, sjfResult).show();
     }
-
-
 
     private void setupActionColumn() {
         colAction.setCellFactory(param -> new TableCell<>() {
@@ -164,7 +163,4 @@ public class Controller {
         table.setVisible(false);
         table.setManaged(false);
         actionBox.setVisible(false);
-        actionBox.setManaged(false);
-
-    }
-}
+        actionBox.setManaged(false);}}
