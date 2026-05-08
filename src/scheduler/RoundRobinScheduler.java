@@ -52,7 +52,7 @@ public class RoundRobinScheduler {
 
         while (!readyQueue.isEmpty()) {
 
-            int idx = readyQueue.remove(0);   // dequeue front
+            int idx = readyQueue.remove(0);
 
 
             if (!started[idx]) {

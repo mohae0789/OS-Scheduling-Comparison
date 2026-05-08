@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import metrics.GanttEntry;
 import metrics.ProcessMetrics;
 import metrics.SimulationResult;
+import model.Process;
 
 import java.util.List;
 
@@ -26,10 +27,13 @@ public class ResultWindow {
 
     private final SimulationResult rrResult;
     private final SimulationResult sjfResult;
+    private final List<Process>    originalProcesses;
 
-    public ResultWindow(SimulationResult rrResult, SimulationResult sjfResult) {
-        this.rrResult  = rrResult;
-        this.sjfResult = sjfResult;
+    public ResultWindow(SimulationResult rrResult, SimulationResult sjfResult,
+                        List<Process> originalProcesses) {
+        this.rrResult          = rrResult;
+        this.sjfResult         = sjfResult;
+        this.originalProcesses = originalProcesses;
     }
 
     public void show() {
@@ -41,22 +45,27 @@ public class ResultWindow {
         root.getStyleClass().add("result-root");
         root.setPadding(new Insets(25));
 
-        // ── Round Robin section ──
+
         Label rrTitle = new Label("Round Robin  (Quantum = " + rrResult.getQuantum() + ")");
         rrTitle.getStyleClass().add("result-main-title");
 
+
+        VBox readyQueueCard = new ReadyQueueVisualization(
+                rrResult, originalProcesses, rrResult.getQuantum()).build();
+
         root.getChildren().addAll(
                 rrTitle,
+                readyQueueCard,
                 buildGanttSection("Round Robin Gantt Chart", rrResult),
                 buildMetricsSection("Metrics for Round Robin", rrResult)
         );
 
-        // ── Divider ──
+
         Separator sep = new Separator();
         sep.setPadding(new Insets(5, 0, 5, 0));
         root.getChildren().add(sep);
 
-        // ── SJF section ──
+
         Label sjfTitle = new Label("Shortest Job First (Preemptive)");
         sjfTitle.getStyleClass().add("result-main-title");
 
@@ -66,24 +75,21 @@ public class ResultWindow {
                 buildMetricsSection("Metrics for SJF", sjfResult)
         );
 
-        // Integrate comparison summary card into results window by Ali Atafe
-
         try {
-    root.getChildren().add(new ComparisonSummaryCard(rrResult, sjfResult).build());
-} catch (Exception ex) {
-    Label fallbackTitle = new Label("Comparison Summary");
-    fallbackTitle.getStyleClass().add("result-section-title");
+            root.getChildren().add(new ComparisonSummaryCard(rrResult, sjfResult).build());
+        } catch (Exception ex) {
+            Label fallbackTitle = new Label("Comparison Summary");
+            fallbackTitle.getStyleClass().add("result-section-title");
 
-    Label fallbackBody = new Label(
-            "Comparison section could not be rendered, but the simulation data is available above.");
-    fallbackBody.getStyleClass().add("legend-label");
-    fallbackBody.setWrapText(true);
+            Label fallbackBody = new Label(
+                    "Comparison section could not be rendered, but the simulation data is available above.");
+            fallbackBody.getStyleClass().add("legend-label");
+            fallbackBody.setWrapText(true);
 
-    VBox fallbackCard = new VBox(10, fallbackTitle, fallbackBody);
-    fallbackCard.getStyleClass().add("result-card");
-    root.getChildren().add(fallbackCard);
-}
-        // End
+            VBox fallbackCard = new VBox(10, fallbackTitle, fallbackBody);
+            fallbackCard.getStyleClass().add("result-card");
+            root.getChildren().add(fallbackCard);
+        }
 
         ScrollPane scroll = new ScrollPane(root);
         scroll.setFitToWidth(true);
@@ -98,6 +104,7 @@ public class ResultWindow {
         stage.show();
         stage.toFront();
     }
+
 
     private VBox buildGanttSection(String heading, SimulationResult result) {
         VBox card = new VBox(10);
@@ -188,12 +195,12 @@ public class ResultWindow {
 
         tv.getColumns().addAll(
                 makeCol("Process", "pid",            120),
-                makeCol("AT",      "arrivalTime",     80),
-                makeCol("BT",      "burstTime",       80),
-                makeCol("CT",      "completionTime",  80),
-                makeCol("TAT",     "turnaroundTime",  80),
-                makeCol("WT",      "waitingTime",     80),
-                makeCol("RT",      "responseTime",    80)
+                makeCol("AT",      "arrivalTime",      80),
+                makeCol("BT",      "burstTime",        80),
+                makeCol("CT",      "completionTime",   80),
+                makeCol("TAT",     "turnaroundTime",   80),
+                makeCol("WT",      "waitingTime",      80),
+                makeCol("RT",      "responseTime",     80)
         );
 
         tv.setItems(FXCollections.observableArrayList(result.getProcessMetrics()));

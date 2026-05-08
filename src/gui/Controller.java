@@ -12,6 +12,9 @@ import scheduler.RoundRobinScheduler;
 import scheduler.SJFScheduler;
 import util.ValidationUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller {
 
     @FXML private TextField txtQuantum, txtArrival, txtBurst;
@@ -122,16 +125,22 @@ public class Controller {
 
         int quantum = Integer.parseInt(txtQuantum.getText().trim());
 
-        // Run Round Robin
+
+        List<Process> snapshot = new ArrayList<>();
+        for (Process p : processList) {
+            snapshot.add(new Process(p.getPid(), p.getArrivalTime(), p.getBurstTime()));
+        }
+
+
         RoundRobinScheduler rrScheduler = new RoundRobinScheduler(quantum);
         SimulationResult rrResult = rrScheduler.simulate(processList);
 
-        // Run SJF (Preemptive)
+
         SJFScheduler sjfScheduler = new SJFScheduler();
         SimulationResult sjfResult = sjfScheduler.simulate(processList);
 
-        // Open result window with both results
-        new ResultWindow(rrResult, sjfResult).show();
+
+        new ResultWindow(rrResult, sjfResult, snapshot).show();
     }
 
     private void setupActionColumn() {
@@ -163,4 +172,6 @@ public class Controller {
         table.setVisible(false);
         table.setManaged(false);
         actionBox.setVisible(false);
-        actionBox.setManaged(false);}}
+        actionBox.setManaged(false);
+    }
+}

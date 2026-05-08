@@ -4,7 +4,7 @@ public class GanttEntry {
 
     private final String pid;
     private final int startTime;
-    private int endTime;   // مش final
+    private int endTime;
 
     public GanttEntry(String pid, int startTime, int endTime) {
         this.pid       = pid;
