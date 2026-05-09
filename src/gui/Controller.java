@@ -15,6 +15,9 @@ import util.ValidationUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
 public class Controller {
 
     @FXML private TextField txtQuantum, txtArrival, txtBurst;
@@ -45,22 +48,65 @@ public class Controller {
         table.setItems(processList);
     }
 
+
+
+
+
+
+
+
+
     @FXML
     private void handleAddProcess() {
-        if (!ValidationUtil.isValidArrival(txtArrival.getText().trim()) ||
-                !ValidationUtil.isPositiveInt(txtBurst.getText().trim())) {
-            ValidationUtil.showWarning("Input Error",
-                    "Please enter valid Arrival (>=0) and Burst (>0) times.");
+        String arrivalStr = txtArrival.getText().trim();
+        String burstStr = txtBurst.getText().trim();
+
+
+        if (arrivalStr.isEmpty() || burstStr.isEmpty()) {
+            ValidationUtil.showWarning("Empty Input",
+                    "Please fill in both Arrival Time and Burst Time fields.");
             return;
         }
+
+        boolean isArrivalInvalid = !ValidationUtil.isValidArrival(arrivalStr);
+        boolean isBurstInvalid = !ValidationUtil.isPositiveInt(burstStr);
+
+
+        if (isArrivalInvalid && isBurstInvalid) {
+            ValidationUtil.showWarning("Input Error",
+                    "Both Arrival Time and Burst Time are invalid! " +
+                            "Arrival must be (>=0) and Burst must be (>0).");
+            return;
+        }
+
+
+        if (isArrivalInvalid) {
+            ValidationUtil.showWarning("Input Error",
+                    "Invalid Arrival Time! Please enter a non-negative integer (>= 0).");
+            return;
+        }
+
+
+        if (isBurstInvalid) {
+            ValidationUtil.showWarning("Input Error",
+                    "Invalid Burst Time! Please enter a positive integer (> 0).");
+            return;
+        }
+
+        // If all checks pass, add the process
         processList.add(new Process(
                 "P" + pCounter++,
-                Integer.parseInt(txtArrival.getText().trim()),
-                Integer.parseInt(txtBurst.getText().trim())));
+                Integer.parseInt(arrivalStr),
+                Integer.parseInt(burstStr)));
+
         showTableComponents();
         txtArrival.clear();
         txtBurst.clear();
     }
+
+
+
+
 
     @FXML
     private void handleScenarioSelection() {
@@ -108,40 +154,54 @@ public class Controller {
         txtQuantum.clear();
     }
 
+
+
+
+
+
     @FXML
     private void handleSimulate() {
+        String quantumStr = txtQuantum.getText().trim();
 
-        if (!ValidationUtil.isPositiveInt(txtQuantum.getText().trim())) {
-            ValidationUtil.showWarning("Missing Data",
-                    "Please enter a positive Time Quantum.");
+
+        if (quantumStr.isEmpty()) {
+            ValidationUtil.showWarning("Empty Input",
+                    "Please enter the Time Quantum before simulating.");
             return;
         }
+
+
+        if (!ValidationUtil.isPositiveInt(quantumStr)) {
+            ValidationUtil.showWarning("Invalid Input",
+                    "Time Quantum must be a positive integer (> 0).");
+            return;
+        }
+
 
         if (processList.isEmpty()) {
-            ValidationUtil.showWarning("No Processes",
-                    "Please add at least one process before simulating.");
+            ValidationUtil.showWarning("No Data",
+                    "Please add at least one process to the table.");
             return;
         }
 
-        int quantum = Integer.parseInt(txtQuantum.getText().trim());
 
+        int quantum = Integer.parseInt(quantumStr);
 
         List<Process> snapshot = new ArrayList<>();
         for (Process p : processList) {
             snapshot.add(new Process(p.getPid(), p.getArrivalTime(), p.getBurstTime()));
         }
 
-
         RoundRobinScheduler rrScheduler = new RoundRobinScheduler(quantum);
         SimulationResult rrResult = rrScheduler.simulate(processList);
-
 
         SJFScheduler sjfScheduler = new SJFScheduler();
         SimulationResult sjfResult = sjfScheduler.simulate(processList);
 
-
         new ResultWindow(rrResult, sjfResult, snapshot).show();
     }
+
+
 
     private void setupActionColumn() {
         colAction.setCellFactory(param -> new TableCell<>() {
