@@ -17,13 +17,13 @@ This document provides a detailed analysis of the performance of **Round Robin (
 *   **Inputs:** P1(BT:8, AT:0), P2(BT:4, AT:1), P3(BT:9, AT:2).
 *   **Quantum:** 5.
 
-<img src="../screenshots/scenario_A_mixed/A.PNG" width="100%"/>
+<img src="../screenshots/scenario_A_mixed/A.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_A_mixed/A_round_robin.PNG" width="100%"/>
+<img src="../screenshots/scenario_A_mixed/A_round_robin.PNG" width="50%"/>
 ---
-<img src="../screenshots/scenario_A_mixed/A_outputs_round_robin.PNG" width="100%"/>
+<img src="../screenshots/scenario_A_mixed/A_outputs_round_robin.PNG" width="50%"/>
 ---
-<img src="../screenshots/scenario_A_mixed/img.PNG" width="100%"/>
+<img src="../screenshots/scenario_A_mixed/img.PNG" width="50%"/>
 ---
 ---
 
@@ -33,11 +33,11 @@ This document provides a detailed analysis of the performance of **Round Robin (
 *   **Inputs:** P1(BT:20, AT:0), P2(BT:2, AT:2), P3(BT:1, AT:3).
 *   **Quantum:** 2.
 
-<img src="../screenshots/scenario_B_short_jobs/B.PNG" width="100%"/>
+<img src="../screenshots/scenario_B_short_jobs/B.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_B_short_jobs/B_round_robin.PNG" width="100%"/>
+<img src="../screenshots/scenario_B_short_jobs/B_round_robin.PNG" width="50%"/>
 ---
-<img src="../screenshots/scenario_B_short_jobs/B_SJF.PNG" width="100%"/>
+<img src="../screenshots/scenario_B_short_jobs/B_SJF.PNG" width="50%"/>
 ---
 ---
 
@@ -46,11 +46,11 @@ This document provides a detailed analysis of the performance of **Round Robin (
 *   **Inputs:** P1(BT:10, AT:0), P2(BT:10, AT:0), P3(BT:10, AT:0).
 *   **Quantum:** 3.
 
-<img src="../screenshots/scenario_C_fairness/C.PNG" width="100%"/>
+<img src="../screenshots/scenario_C_fairness/C.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_C_fairness/C_round_robin.PNG" width="100%"/>
+<img src="../screenshots/scenario_C_fairness/C_round_robin.PNG" width="50%"/>
 ---
-<img src="../screenshots/scenario_C_fairness/C_SJF.PNG" width="100%"/>
+<img src="../screenshots/scenario_C_fairness/C_SJF.PNG" width="50%"/>
 ---
 ---
 
@@ -59,11 +59,11 @@ This document provides a detailed analysis of the performance of **Round Robin (
 *   **Inputs:** P1(BT:30, AT:0), P2(BT:2, AT:1), P3(BT:2, AT:2).
 *   **Quantum:** 5.
 
-<img src="../screenshots/scenario_D_Long_job/D.PNG" width="100%"/>
+<img src="../screenshots/scenario_D_Long_job/D.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_D_Long_job/D_round_robin.PNG" width="100%"/>
+<img src="../screenshots/scenario_D_Long_job/D_round_robin.PNG" width="50%"/>
 ---
-<img src="../screenshots/scenario_D_Long_job/D_SJF.PNG" width="100%"/>
+<img src="../screenshots/scenario_D_Long_job/D_SJF.PNG" width="50%"/>
 ---
 ---
 
@@ -74,11 +74,11 @@ This document provides a detailed analysis of the performance of **Round Robin (
 *   **Test Case:** Entering a negative value for Burst Time and Arrival Time simultaneously.
 *   **Result:** An Alert Box appears stating: *"Both Arrival Time and Burst Time are invalid! Arrival must be (>=0) and Burst must be (>0)."*
 
-<img src="../screenshots/scenario_E_error_handling/Validation_Empty.PNG" width="100%"/>
+<img src="../screenshots/scenario_E_error_handling/Validation_Empty.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_E_error_handling/Validation_non-negative.PNG" width="100%"/>
+<img src="../screenshots/scenario_E_error_handling/Validation_non-negative.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_E_error_handling/Validation_Time_Quantum.PNG" width="100%"/>
+<img src="../screenshots/scenario_E_error_handling/Validation_Time_Quantum.PNG" width="60%"/>
 ---
 ---
 
