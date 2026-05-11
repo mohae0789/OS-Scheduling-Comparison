@@ -1,4 +1,4 @@
-package gui;
+package gui.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,26 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import metrics.SimulationResult;
 import model.Process;
-import scheduler.RoundRobinScheduler;
-import scheduler.SJFScheduler;
 import util.ValidationUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-public class Controller {
+public class MainViewController {
 
     @FXML private TextField txtQuantum, txtArrival, txtBurst;
     @FXML private TableView<Process> table;
-    @FXML private TableColumn<Process, String>  colId;
+    @FXML private TableColumn<Process, String> colId;
     @FXML private TableColumn<Process, Integer> colArrival, colBurst;
-    @FXML private TableColumn<Process, Void>    colAction;
-    @FXML private ComboBox<String>              comboScenarios;
+    @FXML private TableColumn<Process, Void> colAction;
+    @FXML private ComboBox<String> comboScenarios;
     @FXML private HBox actionBox;
 
     private final ObservableList<Process> processList = FXCollections.observableArrayList();
@@ -47,11 +40,6 @@ public class Controller {
         setupActionColumn();
         table.setItems(processList);
     }
-
-
-
-
-
 
 
 
@@ -93,7 +81,7 @@ public class Controller {
             return;
         }
 
-        // If all checks pass, add the process
+
         processList.add(new Process(
                 "P" + pCounter++,
                 Integer.parseInt(arrivalStr),
@@ -117,31 +105,19 @@ public class Controller {
         switch (selected) {
             case "Scenario A: Basic mixed workload":
                 txtQuantum.setText("4");
-                processList.addAll(
-                        new Process("P1", 0, 8),
-                        new Process("P2", 1, 4),
-                        new Process("P3", 2, 9));
+                processList.addAll(new Process("P1", 0, 8), new Process("P2", 1, 4), new Process("P3", 2, 9));
                 break;
             case "Scenario B: Short-job-heavy case":
                 txtQuantum.setText("2");
-                processList.addAll(
-                        new Process("P1", 0, 20),
-                        new Process("P2", 2, 2),
-                        new Process("P3", 3, 1));
+                processList.addAll(new Process("P1", 0, 20), new Process("P2", 2, 2), new Process("P3", 3, 1));
                 break;
             case "Scenario C: Fairness case":
                 txtQuantum.setText("3");
-                processList.addAll(
-                        new Process("P1", 0, 10),
-                        new Process("P2", 0, 10),
-                        new Process("P3", 0, 10));
+                processList.addAll(new Process("P1", 0, 10), new Process("P2", 0, 10), new Process("P3", 0, 10));
                 break;
             case "Scenario D: Long-job sensitivity case":
                 txtQuantum.setText("5");
-                processList.addAll(
-                        new Process("P1", 0, 30),
-                        new Process("P2", 1, 2),
-                        new Process("P3", 2, 2));
+                processList.addAll(new Process("P1", 0, 30), new Process("P2", 1, 2), new Process("P3", 2, 2));
                 break;
         }
         showTableComponents();
@@ -154,54 +130,20 @@ public class Controller {
         txtQuantum.clear();
     }
 
-
-
-
-
-
     @FXML
     private void handleSimulate() {
         String quantumStr = txtQuantum.getText().trim();
 
-
-        if (quantumStr.isEmpty()) {
-            ValidationUtil.showWarning("Empty Input",
-                    "Please enter the Time Quantum before simulating.");
+        if (quantumStr.isEmpty() || !ValidationUtil.isPositiveInt(quantumStr) || processList.isEmpty()) {
+            ValidationUtil.showWarning("Check Input", "Ensure Quantum is positive and table is not empty.");
             return;
         }
-
-
-        if (!ValidationUtil.isPositiveInt(quantumStr)) {
-            ValidationUtil.showWarning("Invalid Input",
-                    "Time Quantum must be a positive integer (> 0).");
-            return;
-        }
-
-
-        if (processList.isEmpty()) {
-            ValidationUtil.showWarning("No Data",
-                    "Please add at least one process to the table.");
-            return;
-        }
-
 
         int quantum = Integer.parseInt(quantumStr);
 
-        List<Process> snapshot = new ArrayList<>();
-        for (Process p : processList) {
-            snapshot.add(new Process(p.getPid(), p.getArrivalTime(), p.getBurstTime()));
-        }
-
-        RoundRobinScheduler rrScheduler = new RoundRobinScheduler(quantum);
-        SimulationResult rrResult = rrScheduler.simulate(processList);
-
-        SJFScheduler sjfScheduler = new SJFScheduler();
-        SimulationResult sjfResult = sjfScheduler.simulate(processList);
-
-        new ResultWindow(rrResult, sjfResult, snapshot).show();
+        SimulationManager manager = new SimulationManager();
+        manager.startSimulation(processList, quantum);
     }
-
-
 
     private void setupActionColumn() {
         colAction.setCellFactory(param -> new TableCell<>() {
@@ -221,17 +163,6 @@ public class Controller {
         });
     }
 
-    private void showTableComponents() {
-        table.setVisible(true);
-        table.setManaged(true);
-        actionBox.setVisible(true);
-        actionBox.setManaged(true);
-    }
-
-    private void hideTableComponents() {
-        table.setVisible(false);
-        table.setManaged(false);
-        actionBox.setVisible(false);
-        actionBox.setManaged(false);
-    }
+    private void showTableComponents() { table.setVisible(true); table.setManaged(true); actionBox.setVisible(true); actionBox.setManaged(true); }
+    private void hideTableComponents() { table.setVisible(false); table.setManaged(false); actionBox.setVisible(false); actionBox.setManaged(false); }
 }

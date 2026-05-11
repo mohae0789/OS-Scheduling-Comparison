@@ -62,7 +62,7 @@ To run this simulator on your local machine, follow these steps:
 1.  **Prerequisites**: Ensure you have **Java 17 (JDK)** or higher installed and the **JavaFX SDK** configured.
 2.  **Clone the Repository**: 
     ```bash
-    git clone [Your-Repo-URL]
+    git clone [https://github.com/mohae0789/OS-Scheduling-Comparison.git]
     ```
 3.  **IDE Configuration**:
     * Open the project in your IDE (IntelliJ IDEA is recommended).

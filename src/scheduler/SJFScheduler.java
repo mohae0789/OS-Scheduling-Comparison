@@ -32,7 +32,7 @@ public class SJFScheduler {
 
         while (completedCount < n) {
 
-            // Pick arrived process with shortest remaining time (SRTF)
+
             int shortest   = -1;
             int minRemTime = Integer.MAX_VALUE;
 
@@ -45,19 +45,19 @@ public class SJFScheduler {
                 }
             }
 
-            // No process arrived yet → jump clock to next arrival
+
             if (shortest == -1) {
                 time++;
                 continue;
             }
 
-            // Record first start time (for Response Time)
+
             if (!started[shortest]) {
                 firstStart[shortest] = time;
                 started[shortest]    = true;
             }
 
-            // Merge consecutive blocks of same process in Gantt chart
+
             if (!gantt.isEmpty() &&
                     gantt.get(gantt.size() - 1).getPid().equals(sorted.get(shortest).getPid())) {
                 gantt.get(gantt.size() - 1).setEnd(time + 1);
@@ -65,11 +65,11 @@ public class SJFScheduler {
                 gantt.add(new GanttEntry(sorted.get(shortest).getPid(), time, time + 1));
             }
 
-            // Run 1 time unit
+
             remaining[shortest]--;
             time++;
 
-            // Check completion
+
             if (remaining[shortest] == 0) {
                 completion[shortest] = time;
                 completed[shortest]  = true;
@@ -77,7 +77,7 @@ public class SJFScheduler {
             }
         }
 
-        // Build metrics — same constructor as RoundRobin
+
         List<ProcessMetrics> metricsList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             Process p = sorted.get(i);

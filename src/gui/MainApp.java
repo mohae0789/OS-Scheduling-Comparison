@@ -10,7 +10,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/gui/layout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/views/layout.fxml"));
 
         primaryStage.setTitle("OS Scheduler Simulator v1.0");
         primaryStage.setScene(new Scene(root, 900, 600));

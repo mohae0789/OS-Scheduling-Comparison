@@ -1,7 +1,7 @@
+
 package metrics;
 
 import java.util.List;
-
 
 public class SimulationResult {
 
@@ -20,25 +20,32 @@ public class SimulationResult {
     public int getQuantum()                        { return quantum; }
     public List<GanttEntry>     getGanttEntries()  { return ganttEntries; }
     public List<ProcessMetrics> getProcessMetrics(){ return processMetrics; }
-
-
     public double avgTAT() {
-        return processMetrics.stream()
-                .mapToInt(ProcessMetrics::getTurnaroundTime)
-                .average().orElse(0);
+        if (processMetrics.isEmpty()) return 0;
+        double sum = 0;
+        for (ProcessMetrics pm : processMetrics) {
+            sum += pm.getTurnaroundTime();
+        }
+        return sum / processMetrics.size();
     }
-
 
     public double avgWT() {
-        return processMetrics.stream()
-                .mapToInt(ProcessMetrics::getWaitingTime)
-                .average().orElse(0);
+        if (processMetrics.isEmpty()) return 0;
+
+        double sum = 0;
+        for (ProcessMetrics pm : processMetrics) {
+            sum += pm.getWaitingTime();
+        }
+        return sum / processMetrics.size();
     }
-
-
     public double avgRT() {
-        return processMetrics.stream()
-                .mapToInt(ProcessMetrics::getResponseTime)
-                .average().orElse(0);
+        if (processMetrics.isEmpty()) return 0;
+
+        double sum = 0;
+        for (ProcessMetrics pm : processMetrics) {
+            sum += pm.getResponseTime();
+        }
+        return sum / processMetrics.size();
     }
 }
+
