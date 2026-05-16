@@ -11,10 +11,10 @@ public class ComparisonController {
 
     public VBox generateSummaryCard(SimulationResult rrResult, SimulationResult sjfResult) {
 
+
         ComparisonSummary summary = new ComparisonSummary(rrResult, sjfResult);
 
-
         return view.buildCard(summary, rrResult.getQuantum());
+
     }
 }
-

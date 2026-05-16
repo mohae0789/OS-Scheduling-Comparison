@@ -19,11 +19,10 @@ This document provides a detailed analysis of the performance of **Round Robin (
 
 <img src="../screenshots/scenario_A_mixed/A.PNG" width="60%"/>
 ---
-<img src="../screenshots/scenario_A_mixed/A_round_robin.PNG" width="50%"/>
+<img src="../screenshots/scenario_A_mixed/A_round_robin_out.PNG" width="50%"/>
 ---
-<img src="../screenshots/scenario_A_mixed/A_outputs_round_robin.PNG" width="50%"/>
----
-<img src="../screenshots/scenario_A_mixed/img.PNG" width="50%"/>
+
+<img src="../screenshots/scenario_A_mixed/A_SJF.PNG" width="50%"/>
 ---
 ---
 

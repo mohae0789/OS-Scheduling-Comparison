@@ -95,7 +95,6 @@ public class MainViewController {
 
 
 
-
     @FXML
     private void handleScenarioSelection() {
         String selected = comboScenarios.getValue();
